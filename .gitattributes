@@ -13,6 +13,13 @@ roles/app/files/index.html linguist-documentation=true
 *.yml linguist-detectable=true
 *.yaml linguist-detectable=true
 
+# ===== Force Ruby to be counted =====
+Vagrantfile linguist-detectable=true
+
+# ===== Exclude from language stats =====
+*.html linguist-documentation=true
+**/*.html linguist-documentation=true
+
 # ===== Line endings =====
 * text=auto eol=lf
 *.sh eol=lf
