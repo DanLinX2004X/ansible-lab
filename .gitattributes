@@ -1,24 +1,28 @@
-# === Normalize line endings ===
-* text=auto eol=lf
-
-# === Explicit language definitions for GitHub Linguist ===
+# ===== Language Overrides =====
 *.yml linguist-language=YAML
 *.yaml linguist-language=YAML
 *.j2 linguist-language=Jinja
 Vagrantfile linguist-language=Ruby
-*.html linguist-detectable=false
 
-# === Treat YAML and YML as text (for diffing) ===
-*.yml text diff=yaml
-*.yaml text diff=yaml
+# ===== Exclude from language stats =====
+*.html linguist-documentation=true
+index.html linguist-documentation=true
+roles/app/files/index.html linguist-documentation=true
 
-# === Markdown ===
-*.md text diff=markdown
+# ===== Force language detection =====
+*.yml linguist-detectable=true
+*.yaml linguist-detectable=true
 
-# === Ignore generated and temp files in archives ===
+# ===== Line endings =====
+* text=auto eol=lf
+*.sh eol=lf
+
+# ===== Diff settings =====
+*.yml diff=yaml
+*.yaml diff=yaml
+*.md diff=markdown
+
+# ===== Export ignore =====
 .vagrant/** export-ignore
 *.log export-ignore
 *.retry export-ignore
-
-# === Scripts ===
-*.sh eol=lf
