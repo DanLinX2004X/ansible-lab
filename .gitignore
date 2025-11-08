@@ -1,0 +1,47 @@
+# === System / OS files ===
+.DS_Store
+Thumbs.db
+
+# === Python cache ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# === Ansible ===
+*.retry
+*.log
+*.vault
+*.secret
+*.bak
+
+# === Vagrant ===
+.vagrant/
+.vagrant.d/
+*.box
+
+# === VirtualBox artifacts ===
+*.vdi
+*.vmdk
+*.vbox
+*.vbox-prev
+
+# === Temporary / backup ===
+*.tmp
+*.swp
+*.swo
+*~
+*.old
+*.orig
+
+# === IDE / Editor configs ===
+.vscode/
+.idea/
+*.iml
+
+# === GitHub Actions cache ===
+.github/workflows/*.bak
+.github/workflows/*.old
+
+# === OS language specific ===
+Документы/

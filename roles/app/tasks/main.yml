@@ -1,0 +1,50 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install Python and dependencies
+  apt:
+    name:
+      - python3
+      - python3-pip
+      - python3-venv
+      - nginx
+      - python3-psycopg2
+    state: present
+
+- name: Copy demo HTML page
+  copy:
+    src: index.html
+    dest: /var/www/html/index.html
+    owner: www-data
+    group: www-data
+    mode: '0644'
+
+- name: Ensure nginx is started and enabled
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Create check script directory
+  file:
+    path: /usr/local/bin/myapp
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: '0755'
+
+- name: Create Python DB check script from template
+  template:
+    src: check_db.py.j2
+    dest: /usr/local/bin/myapp/check_db.py
+    owner: vagrant
+    group: vagrant
+    mode: '0755'
+
+- name: Make script executable
+  file:
+    path: /usr/local/bin/myapp/check_db.py
+    mode: '0755'

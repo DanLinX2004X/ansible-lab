@@ -1,0 +1,37 @@
+name: Infrastructure Syntax Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-and-validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install ansible yamllint
+
+      - name: YAML Lint (non-blocking)
+        run: |
+          echo "Running yamllint..."
+          yamllint . || echo "::warning file=yamllint::YAML warnings detected, but not failing the build."
+
+      - name: Ansible syntax check
+        run: |
+          echo "Checking Ansible playbook syntax..."
+          ansible-playbook --syntax-check playbook.yml
+
+      - name: Validate Vagrantfile syntax
+        run: |
+          echo "Validating Vagrantfile..."
+          ruby -c Vagrantfile || echo "::warning file=Vagrantfile::Possible Ruby syntax issue, ignoring for now."

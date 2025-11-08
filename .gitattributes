@@ -1,0 +1,24 @@
+# === Normalize line endings ===
+* text=auto eol=lf
+
+# === Explicit language definitions for GitHub Linguist ===
+*.yml linguist-language=YAML
+*.yaml linguist-language=YAML
+*.j2 linguist-language=Jinja
+Vagrantfile linguist-language=Ruby
+*.html linguist-detectable=false
+
+# === Treat YAML and YML as text (for diffing) ===
+*.yml text diff=yaml
+*.yaml text diff=yaml
+
+# === Markdown ===
+*.md text diff=markdown
+
+# === Ignore generated and temp files in archives ===
+.vagrant/** export-ignore
+*.log export-ignore
+*.retry export-ignore
+
+# === Scripts ===
+*.sh eol=lf

@@ -1,0 +1,11 @@
+- name: Provision DB (PostgreSQL)
+  hosts: db
+  become: yes
+  roles:
+    - db
+
+- name: Provision App (client)
+  hosts: app
+  become: yes
+  roles:
+    - app

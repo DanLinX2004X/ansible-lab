@@ -1,0 +1,43 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install PostgreSQL and client
+  apt:
+    name:
+      - postgresql
+      - postgresql-client
+      - postgresql-contrib
+    state: present
+
+- name: Ensure PostgreSQL service is running
+  systemd:
+    name: postgresql
+    state: started
+    enabled: yes
+
+- name: Check if PostgreSQL user exists
+  command: sudo -u postgres psql -t -c "SELECT 1 FROM pg_roles WHERE rolname='myapp_user'"
+  register: user_check
+  changed_when: false
+  failed_when: user_check.rc != 0
+
+- name: Create PostgreSQL user
+  command: sudo -u postgres psql -c "CREATE USER myapp_user WITH PASSWORD 'secret';"
+  when: user_check.stdout | trim == ""
+  register: create_user
+  changed_when: create_user.rc == 0
+
+- name: Check if PostgreSQL database exists
+  command: sudo -u postgres psql -t -c "SELECT 1 FROM pg_database WHERE datname='myapp_db'"
+  register: db_check
+  changed_when: false
+  failed_when: db_check.rc != 0
+
+- name: Create PostgreSQL database
+  command: sudo -u postgres createdb -O myapp_user myapp_db
+  when: db_check.stdout | trim == ""
+  register: create_db
+  changed_when: create_db.rc == 0
